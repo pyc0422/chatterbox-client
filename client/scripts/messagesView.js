@@ -12,18 +12,17 @@ var MessagesView = {
     Parse.readAll((data) => {
       data.forEach(item => MessagesView.renderMessage(item));
     });
-    // for (var i = 0; i < data.length; i++) {
-    //   html += MessageView.render(data[i].text);
-    // }
     //MessagesView.$chats.append(html);
 
   },
 
   render: function() {
     // TODO: Render _all_ the messages.
-    //$chats.html('');
-    //$chat.append();
-    //$chat.append(oldmessages);
+    MessagesView.$chats.html('');
+    Parse.readAll((data) => {
+      data.forEach(item => MessagesView.renderMessage(item));
+    });
+
   },
 
   renderMessage: function(message) {
