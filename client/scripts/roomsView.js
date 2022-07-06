@@ -17,6 +17,10 @@ var RoomsView = {
 
   renderRoom: function(roomname) {
     // TODO: Render out a single room.
+    //create a room by the roomname
+    var room = '<option value=roomname> roomname </div>';
+    // add room to roomsview
+    RoomsView.$select.append(room);
   },
 
   handleChange: function(event) {
@@ -25,6 +29,10 @@ var RoomsView = {
 
   handleClick: function(event) {
     // TODO: Handle the user clicking the "Add Room" button.
+
+    RoomsView.$button.on('click', Rooms.add(App.username));
+
+
   }
 
 };
