@@ -9,8 +9,8 @@ var Rooms = {
 
   // TODO: Define methods which allow you to add rooms, update the list,
   add: function(roomname) {
-    if (_.data.indexOf(roomname) === -1) {
-      _.data.push(roomname);
+    if (Rooms._data.indexOf(roomname) === -1) {
+      Rooms._data.push(roomname);
     }
   }
   // mark a room as selected, etc.

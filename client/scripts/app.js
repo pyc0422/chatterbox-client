@@ -16,12 +16,14 @@ var App = {
     MessagesView.initialize();
 
     // Fetch initial batch of messages
-    App.startSpinner();
-    App.fetch(App.stopSpinner);
+    //App.startSpinner();
+    //App.fetch(App.stopSpinner);
+    App.stopSpinner();
 
+    App.fetch();
     // TODO: Make sure the app loads data from the API
     // continually, instead of just once at the start.
-
+    //setInterval(MessagesView.render, 5000);
   },
 
   fetch: function(callback = ()=>{}) {
@@ -29,7 +31,14 @@ var App = {
     Parse.readAll((data) => {
       // examine the response from the server request:
       console.log(data);
-
+      data.forEach((item) => {
+        MessagesView.renderMessage(item);
+        Messages.add(item);
+        if (Rooms._data.indexOf(item.roomname) === -1 && item.roomname) {
+          RoomsView.renderRoom(item.roomname);
+          Rooms.add(item.roomname);
+        }
+      });
       // TODO: Use the data to update Messages and Rooms
       // and re-render the corresponding views.
     });

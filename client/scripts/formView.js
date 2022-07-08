@@ -8,15 +8,14 @@ var FormView = {
 
   initialize: function() {
     FormView.$form.on('submit', FormView.handleSubmit);
-
-
   },
 
   handleSubmit: function(event) {
     // Stop the browser from submitting the form
 
     event.preventDefault();
-
+    //App.$spinner.show();
+    //FormView.setStatus(true);
     var message = {
       username: App.username,
       text: $('#message').val(),
@@ -24,16 +23,16 @@ var FormView = {
     };
     // TODO: Currently, this is all handleSubmit does.
     // Make this function actually send a message to the Parse API.
-    Parse.create(message);
-
+    App.startSpinner();
+    Parse.create(message, RoomsView.handleChange);
     console.log('click!');
-    MessagesView.render();
-    App.fetch();
+    App.stopSpinner();
+
   },
 
   setStatus: function(active) {
-    //var status = active ? 'true' : null;
-    //FormView.$form.find('input[type=submit]').attr('disabled', status);
+    var status = active ? 'true' : null;
+    FormView.$form.find('input[type=submit]').attr('disabled', status);
   }
 
 };
