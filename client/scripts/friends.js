@@ -13,13 +13,16 @@ var Friends = {
     if (Friends._data.indexOf(user) === -1) {
       return false;
     } else {
+
       return true;
     }
+
   },
   // and check the friendship status of other users.
   addFriend: function(name) {
     if (Friends._data.indexOf(name) === -1) {
       Friends._data.push(name);
+      $('#chats #' + name).attr('class', 'friend');
     }
   }
 };

@@ -10,7 +10,7 @@ var MessagesView = {
     // when this view loads.
     MessagesView.render();
     $('#refresh').on('click', RoomsView.handleChange);
-    $('#chats').children().on('click', MessagesView.handleClick);
+    MessagesView.$chats.click(MessagesView.handleClick);
     // add inside $chat
   },
 
@@ -25,25 +25,23 @@ var MessagesView = {
 
   renderMessage: function(message) {
     // TODO: Render a single message.
-    //create a new message
     MessagesView.$chats.append(MessageView.render(message));
-    // add inside $chat
-
-
-    // call MessagesView.render();
   },
 
   handleClick: function(event) {
     // TODO: handle a user clicking on a message
     // (this should add the sender to the user's friend list).
-    event.preventDefault();
-    var $username = $(this);
-    console.log($username);
-    if (Friends.toggleStatus($username.text()) === false) {
-      Friends.addFriend($username.text());
-    } else {
-      $username.css('font-color', 'red');
-    }
-    console.log('friends clicked');
+    //event.preventDefault();
+    $('#chats .username').click(function() {
+      event.preventDefault();
+      var username = $(this).attr('id').replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, '');
+      $(this).attr('id', username);
+      if (!Friends.toggleStatus(username)) {
+        Friends.addFriend(username);
+      }
+      $('#chats #' + username).siblings().css('color', 'red');
+      console.log('friends clicked');
+    });
+
   }
 };
