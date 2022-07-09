@@ -20,6 +20,7 @@ var RoomsView = {
     //     }
     //   });
     // });
+    //RoomsView.$select.html('');
     RoomsView.render();
 
     RoomsView.$button.on('click', RoomsView.handleClick);
@@ -32,7 +33,7 @@ var RoomsView = {
     RoomsView.$select.show();
     var initialOption = '<option> Lobby </option>';
     RoomsView.$select.append(initialOption);
-    var roomOption = '<option class="editable" value="New Room...">New Room...</option>';
+    var roomOption = '<option class="editable" value="Create new room">Create new room</option>';
     RoomsView.$select.append(roomOption);
     Rooms._data.forEach(function(room) {
       RoomsView.renderRoom(room);
@@ -72,6 +73,13 @@ var RoomsView = {
     if (selectedRoom === 'Lobby') {
       MessagesView.render();
     } else {
+      // App.fetch(function(data) {
+      //   data.forEach((item) => {
+      //     if (item.roomname === selectedRoom) {
+      //       MessagesView.renderMessage(item);
+      //     }
+      //   });
+      // });
       Parse.readAll((data) => {
         data.forEach((item) => {
           if (item.roomname === selectedRoom) {
@@ -80,7 +88,14 @@ var RoomsView = {
         });
       });
     }
-    Friends.render();
+    console.log('rooms view friends data: ', Friends._data);
+    // Friends._data.forEach(function(friend) {
+    //   var a = $('#chats #' + friend).attr('id');//.addClass('class', 'friend');
+    //   console.log(a);
+    //   $('#chats #' + friend).siblings().css('color', 'red');
+    //   //Friends.toggleStatus(friend);
+    // });
+
 
   },
 
@@ -94,6 +109,7 @@ var RoomsView = {
       Rooms.add(roomname);
       console.log('add room clicked');
       RoomsView.render();
+      MessagesView.render();
     }
   }
 

@@ -30,7 +30,7 @@ var App = {
 
     Parse.readAll((data) => {
       // examine the response from the server request:
-      console.log(data);
+      // console.log(data);
       data.forEach((item) => {
         MessagesView.renderMessage(item);
         Messages.add(item);

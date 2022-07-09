@@ -8,9 +8,12 @@ var MessagesView = {
   initialize: function() {
     // TODO: Perform any work which needs to be done
     // when this view loads.
+    MessagesView.$chats.html('');
+    App.fetch(MessagesView.render);
     MessagesView.render();
     $('#refresh').on('click', RoomsView.handleChange);
     MessagesView.$chats.mousemove(MessagesView.handleClick);
+
     // add inside $chat
   },
 
@@ -18,9 +21,21 @@ var MessagesView = {
     // TODO: Render _all_ the messages.
     MessagesView.$chats.html('');
     Parse.readAll((data) => {
-      data.forEach(item => MessagesView.renderMessage(item));
+      data.forEach(item => {
+        if (item.username && item.username.length > 0) {
+          item.username = item.username.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, '');
+          MessagesView.renderMessage(item);
+        }
+      });
     });
-    Friends.render();
+    console.log('friends: ', Friends._data);
+    // var argArr = Array.from(arguments);
+    // argArr.forEach(item => {
+    //   if (item.username && item.username.length > 0) {
+    //     item.username = item.username.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, '');
+    //     MessagesView.renderMessage(item);
+    //   }
+    // });
   },
 
   renderMessage: function(message) {
@@ -34,12 +49,16 @@ var MessagesView = {
     //event.preventDefault();
     $('#chats .username').click(function() {
       event.preventDefault();
-      var username = $(this).attr('id').replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, '');
-      $(this).attr('id', username);
-      Friends.toggleStatus(username);
-      $('#chats #' + username).siblings().css('color', 'red');
+
+      //var username = $(this).attr('id').replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, '');
+      var username = $(this).attr('id');
+      //$(this).attr('id', username);
+      Friends.addFriend(username);
+      //$('#chats #' + username).siblings().css('color', 'red');
+      //console.log('username: ', usernames);
+      // var arr = usernames.split(' ');
+      // console.log('arr: ', arr);
+
     });
-
-
   }
 };

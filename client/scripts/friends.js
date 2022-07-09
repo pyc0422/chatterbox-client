@@ -9,23 +9,15 @@ var Friends = {
 
   // TODO: Define methods which allow you to add, toggle,
 
-  toggleStatus: function(user) {
-    if (Friends._data.indexOf(user) === -1) {
-      Friends.addFriend(user);
-    }
-    $('#chats #' + user).attr('class', 'friend');
+  toggleStatus: function(friend) {
+    $('#chats #' + friend).attr('class', 'friend');
+    $('#chats #' + friend).siblings().css('color', 'red');
   },
   // and check the friendship status of other users.
   addFriend: function(name) {
-    if (Friends._data.indexOf(name) === -1) {
+    if (Friends._data.indexOf(name) === -1 && name !== App.username) {
       Friends._data.push(name);
+      Friends.toggleStatus(name);
     }
-  },
-
-  render: function() {
-    Friends._data.forEach(friend => {
-      $('#chats #' + friend).attr('class', 'friend');
-      $('#chats #' + friend).siblings().css('color', 'red');
-    });
   }
 };
