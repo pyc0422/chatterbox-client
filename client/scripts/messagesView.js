@@ -10,7 +10,7 @@ var MessagesView = {
     // when this view loads.
     MessagesView.render();
     $('#refresh').on('click', RoomsView.handleChange);
-    MessagesView.$chats.click(MessagesView.handleClick);
+    MessagesView.$chats.mousemove(MessagesView.handleClick);
     // add inside $chat
   },
 
@@ -20,7 +20,7 @@ var MessagesView = {
     Parse.readAll((data) => {
       data.forEach(item => MessagesView.renderMessage(item));
     });
-
+    Friends.render();
   },
 
   renderMessage: function(message) {
@@ -36,12 +36,10 @@ var MessagesView = {
       event.preventDefault();
       var username = $(this).attr('id').replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, '');
       $(this).attr('id', username);
-      if (!Friends.toggleStatus(username)) {
-        Friends.addFriend(username);
-      }
+      Friends.toggleStatus(username);
       $('#chats #' + username).siblings().css('color', 'red');
-      console.log('friends clicked');
     });
+
 
   }
 };

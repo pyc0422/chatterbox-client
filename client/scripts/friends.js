@@ -11,18 +11,21 @@ var Friends = {
 
   toggleStatus: function(user) {
     if (Friends._data.indexOf(user) === -1) {
-      return false;
-    } else {
-
-      return true;
+      Friends.addFriend(user);
     }
-
+    $('#chats #' + user).attr('class', 'friend');
   },
   // and check the friendship status of other users.
   addFriend: function(name) {
     if (Friends._data.indexOf(name) === -1) {
       Friends._data.push(name);
-      $('#chats #' + name).attr('class', 'friend');
     }
+  },
+
+  render: function() {
+    Friends._data.forEach(friend => {
+      $('#chats #' + friend).attr('class', 'friend');
+      $('#chats #' + friend).siblings().css('color', 'red');
+    });
   }
 };

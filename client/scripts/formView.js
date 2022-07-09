@@ -27,7 +27,7 @@ var FormView = {
     Parse.create(message, RoomsView.handleChange);
     console.log('click!');
     App.stopSpinner();
-    event.target.reset();
+    $('form #message').val('');
 
   },
 

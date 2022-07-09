@@ -71,14 +71,16 @@ var RoomsView = {
     $('#chats').html('');
     if (selectedRoom === 'Lobby') {
       MessagesView.render();
-    }
-    Parse.readAll((data) => {
-      data.forEach((item) => {
-        if (item.roomname === selectedRoom) {
-          MessagesView.renderMessage(item);
-        }
+    } else {
+      Parse.readAll((data) => {
+        data.forEach((item) => {
+          if (item.roomname === selectedRoom) {
+            MessagesView.renderMessage(item);
+          }
+        });
       });
-    });
+    }
+    Friends.render();
 
   },
 
